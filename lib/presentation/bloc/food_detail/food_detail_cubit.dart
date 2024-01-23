@@ -16,29 +16,35 @@ class FoodDetailCubit extends Cubit<FoodDetailState> {
   }) : super(FoodDetailInitial());
 
   String? aiResult;
+  File? localFile;
 
   init(String filePath) {
-    getFoodInfo(File(filePath));
+    localFile = File(filePath);
+    if (localFile != null) getFoodInfo();
   }
 
-  getFoodInfo(File file) async {
+  getFoodInfo() async {
     try {
-      emit(FoodDetailLoading());
+      if (localFile != null) {
+        emit(FoodDetailLoading());
 
-      //final byteData = await file.readAsBytesSync();
-      final Uint8List image = file.readAsBytesSync();
+        //final byteData = await file.readAsBytesSync();
+        final Uint8List image = localFile!.readAsBytesSync();
 
-      final response = await aiUseCase.getPacketFoodInfoByImage(image);
+        final response = await aiUseCase.getPacketFoodInfoByImage(image);
 
-      response.fold(
-        (failure) {
-          emit(FoodDetailFailed(failure.message));
-        },
-        (data) {
-          aiResult = data;
-          emit(FoodDetailSuccess());
-        },
-      );
+        response.fold(
+          (failure) {
+            emit(FoodDetailFailed(failure.message));
+          },
+          (data) {
+            aiResult = data;
+            emit(FoodDetailSuccess());
+          },
+        );
+      } else {
+        emit(const FoodDetailFailed("Image not found please go back and pick new image."));
+      }
     } on Exception catch (e) {
       emit(FoodDetailFailed(e.toString()));
     }
