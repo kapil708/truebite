@@ -1,0 +1,163 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:food_ai/core/extensions/spacing.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../../../core/route/route_names.dart';
+import '../../../injection_container.dart';
+import '../../bloc/packet_food/packet_food_cubit.dart';
+import '../../core/helper.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => locator.get<PacketFoodCubit>(),
+      child: const HomeView(),
+    );
+  }
+}
+
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  static List howItWorks = [
+    {'title': 'Snap It:', 'description': 'Capture a photo of packet food.'},
+    {'title': 'Analyze It:', 'description': 'FoodAi identifies ingredients.'},
+    {'title': 'Info at a Glance:', 'description': 'Instant nutritional breakdown.'},
+    {'title': 'Health Rating:', 'description': 'Know how good or bad.'},
+    {'title': 'Personalized Tips:', 'description': 'Tailored recommendations for a healthier you!'},
+    {'title': 'Repeat Daily:', 'description': 'Your journey to a balanced and informed diet begins here!'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    PacketFoodCubit packetFoodCubit = context.read<PacketFoodCubit>();
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Food Ai")),
+      body: BlocListener<PacketFoodCubit, PacketFoodState>(
+        listener: (context, state) {
+          if (state is PacketFoodFailed) {
+            showSnackBar(context, SnackBarType.success, "Order created successfully");
+          } else if (state is PacketFoodFileSelected) {
+            context.pushNamed(
+              RouteName.foodDetail,
+              queryParameters: {'filePath': state.filePath},
+            );
+          } else if (state is PacketFoodPermissionDenied) {
+            showAlertDialog(
+              context: context,
+              title: "Permission denied",
+              body: "You have denied the permission. Open settings to allow.",
+              actions: [
+                TextButton(
+                  onPressed: () => context.pop(),
+                  child: const Text("Cancel"),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    context.pop();
+                    openAppSettings();
+                  },
+                  child: const Text("Open Settings"),
+                ),
+              ],
+            );
+          }
+        },
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.sizeOf(context).width,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Pick image to continue.",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  const VSpace(16),
+                  FilledButton(
+                    onPressed: () => packetFoodCubit.pickImage(
+                      ImageSource.camera,
+                      context: context,
+                      primaryColor: Theme.of(context).colorScheme.primary,
+                      toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
+                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                    style: FilledButton.styleFrom(backgroundColor: Colors.blue),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.camera),
+                        HSpace(8),
+                        Text("Capture using camera"),
+                      ],
+                    ),
+                  ),
+                  const VSpace(8),
+                  FilledButton(
+                    onPressed: () => packetFoodCubit.pickImage(
+                      ImageSource.gallery,
+                      context: context,
+                      primaryColor: Theme.of(context).colorScheme.primary,
+                      toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
+                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.image_outlined),
+                        HSpace(8),
+                        Text("Pick from gallery"),
+                      ],
+                    ),
+                  ),
+                  const VSpace(16),
+                  const Divider(),
+                  const VSpace(8),
+                  Text(
+                    "Discover a healthier you with FoodAi! Your pocket nutritionist awaits!",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const VSpace(32),
+                  Text(
+                    "How it works",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const VSpace(8),
+                  ...howItWorks.map((step) {
+                    return RichText(
+                      text: TextSpan(
+                        text: "${step['title']}",
+                        style: Theme.of(context).textTheme.titleMedium,
+                        children: [
+                          TextSpan(
+                            text: " ${step['description']}",
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
