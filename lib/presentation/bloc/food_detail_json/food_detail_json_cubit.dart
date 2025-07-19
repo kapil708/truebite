@@ -1,21 +1,20 @@
 import 'dart:io';
 
+import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:food_ai/domain/use_cases/ai_use_case.dart';
 
-import '../../../domain/use_cases/ai_use_case.dart';
+part 'food_detail_json_state.dart';
 
-part 'food_detail_state.dart';
-
-class FoodDetailCubit extends Cubit<FoodDetailState> {
+class FoodDetailJsonCubit extends Cubit<FoodDetailJsonState> {
   final AiUseCase aiUseCase;
 
-  FoodDetailCubit({
+  FoodDetailJsonCubit({
     required this.aiUseCase,
-  }) : super(FoodDetailInitial());
+  }) : super(FoodDetailJsonInitial());
 
-  String? aiResult;
+  Map<String, dynamic>? aiResult;
   List<File> localFiles = [];
 
   init(List<dynamic> filePaths) {
@@ -40,7 +39,7 @@ class FoodDetailCubit extends Cubit<FoodDetailState> {
 
         // final Uint8List image = localFile!.readAsBytesSync();
 
-        final response = await aiUseCase.getPacketFoodInfoByImage(images);
+        final response = await aiUseCase.getPacketFoodJsonByImage(images);
 
         response.fold(
           (failure) {

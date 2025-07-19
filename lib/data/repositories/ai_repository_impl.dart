@@ -14,11 +14,25 @@ class AiRepositoryImpl implements AiRepository {
   AiRepositoryImpl({required this.remoteDataSource, required this.networkInfo});
 
   @override
-  Future<Either<RemoteFailure, String>> getPacketFoodInfoByImage(Uint8List body) async {
+  Future<Either<RemoteFailure, String>> getPacketFoodInfoByImage(List<Uint8List> images) async {
     if (await networkInfo.isConnected) {
       try {
-        final login = await remoteDataSource.getPacketFoodInfoByImage(body);
-        return Right(login);
+        final response = await remoteDataSource.getPacketFoodInfoByImage(images);
+        return Right(response);
+      } on RemoteException catch (e) {
+        return Left(RemoteFailure(statusCode: e.statusCode, message: e.message));
+      }
+    } else {
+      return const Left(RemoteFailure(statusCode: 12163, message: 'No internet connection.'));
+    }
+  }
+
+  @override
+  Future<Either<RemoteFailure, Map<String, dynamic>>> getPacketFoodJsonByImage(List<Uint8List> images) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final response = await remoteDataSource.getPacketFoodJsonByImage(images);
+        return Right(response);
       } on RemoteException catch (e) {
         return Left(RemoteFailure(statusCode: e.statusCode, message: e.message));
       }

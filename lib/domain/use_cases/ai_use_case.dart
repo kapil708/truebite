@@ -9,7 +9,11 @@ class AiUseCase {
 
   AiUseCase({required this.aiRepository});
 
-  Future<Either<RemoteFailure, String>> getPacketFoodInfoByImage(Uint8List body) async {
-    return aiRepository.getPacketFoodInfoByImage(body);
+  Future<Either<RemoteFailure, String>> getPacketFoodInfoByImage(List<Uint8List> images) async {
+    return aiRepository.getPacketFoodInfoByImage(images);
+  }
+
+  Future<Either<RemoteFailure, Map<String, dynamic>>> getPacketFoodJsonByImage(List<Uint8List> images) async {
+    return aiRepository.getPacketFoodJsonByImage(images);
   }
 }

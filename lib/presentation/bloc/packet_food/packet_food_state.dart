@@ -29,6 +29,15 @@ class PacketFoodPermissionDenied extends PacketFoodState {
   List<Object> get props => [];
 }
 
+class PacketFoodUpdate extends PacketFoodState {
+  final DateTime dateTime;
+
+  const PacketFoodUpdate(this.dateTime);
+
+  @override
+  List<Object> get props => [dateTime];
+}
+
 class PacketFoodFailed extends PacketFoodState {
   final String message;
 
@@ -39,10 +48,10 @@ class PacketFoodFailed extends PacketFoodState {
 }
 
 class PacketFoodFileSelected extends PacketFoodState {
-  final String filePath;
+  final List<String> filePaths;
 
-  const PacketFoodFileSelected(this.filePath);
+  const PacketFoodFileSelected(this.filePaths);
 
   @override
-  List<Object> get props => [filePath];
+  List<Object> get props => [filePaths];
 }

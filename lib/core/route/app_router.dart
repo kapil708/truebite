@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:go_router/go_router.dart';
 
 import '../../data/data_sources/local_data_source.dart';
@@ -36,12 +38,12 @@ class AppRouter {
             path: 'foodDetail',
             name: RouteName.foodDetail,
             builder: (context, state) {
-              String filePath = "";
-              if (state.uri.queryParameters['filePath'] != null) {
-                filePath = state.uri.queryParameters['filePath']!;
+              List<dynamic> filePaths = [];
+              if (state.uri.queryParameters['filePaths'] != null) {
+                filePaths = jsonDecode(state.uri.queryParameters['filePaths']!);
               }
 
-              return FoodDetailPage(filePath: filePath);
+              return FoodDetailPage(filePaths: filePaths);
             },
             //builder: (context, state) => const FoodDetailPage(),
           ),

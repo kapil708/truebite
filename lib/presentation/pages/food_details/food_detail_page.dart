@@ -9,14 +9,14 @@ import 'package:lottie/lottie.dart';
 import '../../bloc/food_detail/food_detail_cubit.dart';
 
 class FoodDetailPage extends StatelessWidget {
-  final String filePath;
+  final List<dynamic> filePaths;
 
-  const FoodDetailPage({super.key, required this.filePath});
+  const FoodDetailPage({super.key, required this.filePaths});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => locator.get<FoodDetailCubit>()..init(filePath),
+      create: (context) => locator.get<FoodDetailCubit>()..init(filePaths),
       child: const FoodDetailView(),
     );
   }

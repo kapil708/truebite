@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,14 +45,14 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Food Ai")),
-      body: BlocListener<PacketFoodCubit, PacketFoodState>(
+      body: BlocConsumer<PacketFoodCubit, PacketFoodState>(
         listener: (context, state) {
           if (state is PacketFoodFailed) {
             showSnackBar(context, SnackBarType.success, "Order created successfully");
           } else if (state is PacketFoodFileSelected) {
             context.pushNamed(
               RouteName.foodDetail,
-              queryParameters: {'filePath': state.filePath},
+              queryParameters: {'filePaths': jsonEncode(state.filePaths)},
             );
           } else if (state is PacketFoodPermissionDenied) {
             showAlertDialog(
@@ -73,91 +75,209 @@ class HomeView extends StatelessWidget {
             );
           }
         },
-        child: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.sizeOf(context).width,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Pick image to continue.",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                  const VSpace(16),
-                  FilledButton(
-                    onPressed: () => packetFoodCubit.pickImage(
-                      ImageSource.camera,
-                      context: context,
-                      primaryColor: Theme.of(context).colorScheme.primary,
-                      toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
-                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                    ),
-                    style: FilledButton.styleFrom(backgroundColor: Colors.blue),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.camera),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              FilledButton(
+                                onPressed: () => imageSelection(
+                                  context: context,
+                                  type: 'ingredients',
+                                  onTap: (value) {
+                                    context.pop();
+                                    packetFoodCubit.pickImage(
+                                      imageSource: value == 'camera' ? ImageSource.camera : ImageSource.gallery,
+                                      type: 'ingredients',
+                                      context: context,
+                                      primaryColor: Theme.of(context).colorScheme.primary,
+                                      toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
+                                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                    );
+                                  },
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.ac_unit),
+                                    HSpace(4),
+                                    Text("Pick Ingredients"),
+                                  ],
+                                ),
+                              ),
+                              if (packetFoodCubit.ingredients != null) ...[
+                                Image.file(packetFoodCubit.ingredients!),
+                                const VSpace(8),
+                              ],
+                            ],
+                          ),
+                        ),
                         HSpace(8),
-                        Text("Capture using camera"),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              FilledButton(
+                                onPressed: () => imageSelection(
+                                  context: context,
+                                  type: 'nutrition',
+                                  onTap: (value) {
+                                    context.pop();
+                                    packetFoodCubit.pickImage(
+                                      imageSource: value == 'camera' ? ImageSource.camera : ImageSource.gallery,
+                                      type: 'nutrition',
+                                      context: context,
+                                      primaryColor: Theme.of(context).colorScheme.primary,
+                                      toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
+                                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                    );
+                                  },
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.nature_outlined),
+                                    HSpace(4),
+                                    Text("Pick Nutrition"),
+                                  ],
+                                ),
+                              ),
+                              if (packetFoodCubit.nutrition != null) ...[
+                                Image.file(packetFoodCubit.nutrition!),
+                                const VSpace(8),
+                              ],
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  const VSpace(8),
-                  FilledButton(
-                    onPressed: () => packetFoodCubit.pickImage(
-                      ImageSource.gallery,
-                      context: context,
-                      primaryColor: Theme.of(context).colorScheme.primary,
-                      toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
-                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.image_outlined),
-                        HSpace(8),
-                        Text("Pick from gallery"),
-                      ],
-                    ),
-                  ),
-                  const VSpace(16),
-                  const Divider(),
-                  const VSpace(8),
-                  Text(
-                    "Discover a healthier you with FoodAi! Your pocket nutritionist awaits!",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const VSpace(32),
-                  Text(
-                    "How it works",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const VSpace(8),
-                  ...howItWorks.map((step) {
-                    return RichText(
-                      text: TextSpan(
-                        text: "${step['title']}",
-                        style: Theme.of(context).textTheme.titleMedium,
-                        children: [
-                          TextSpan(
-                            text: " ${step['description']}",
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          )
-                        ],
+                    const VSpace(8),
+                    // FilledButton(
+                    //   onPressed: () => packetFoodCubit.pickImage(
+                    //     ImageSource.camera,
+                    //     'ingredients',
+                    //     context: context,
+                    //     primaryColor: Theme.of(context).colorScheme.primary,
+                    //     toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
+                    //     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    //   ),
+                    //   style: FilledButton.styleFrom(backgroundColor: Colors.blue),
+                    //   child: const Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Icon(Icons.camera),
+                    //       HSpace(8),
+                    //       Text("Capture using camera"),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const VSpace(8),
+                    // FilledButton(
+                    //   onPressed: () => packetFoodCubit.pickImage(
+                    //     ImageSource.gallery,
+                    //     '',
+                    //     context: context,
+                    //     primaryColor: Theme.of(context).colorScheme.primary,
+                    //     toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
+                    //     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    //   ),
+                    //   child: const Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Icon(Icons.image_outlined),
+                    //       HSpace(8),
+                    //       Text("Pick from gallery"),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const VSpace(16),
+                    if (packetFoodCubit.ingredients != null && packetFoodCubit.nutrition != null)
+                      FilledButton(
+                        onPressed: packetFoodCubit.continueToFoodAI,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Continue to FoodAi"),
+                            Icon(Icons.keyboard_arrow_right),
+                          ],
+                        ),
                       ),
-                    );
-                  }),
-                ],
+                    const Divider(),
+                    const VSpace(8),
+                    Text(
+                      "Discover a healthier you with FoodAi! Your pocket nutritionist awaits!",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const VSpace(32),
+                    Text(
+                      "How it works",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const VSpace(8),
+                    ...howItWorks.map((step) {
+                      return RichText(
+                        text: TextSpan(
+                          text: "${step['title']}",
+                          style: Theme.of(context).textTheme.titleMedium,
+                          children: [
+                            TextSpan(
+                              text: " ${step['description']}",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+                  ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
+    );
+  }
+
+  void imageSelection({
+    required BuildContext context,
+    required ValueChanged<String> onTap,
+    required String type,
+  }) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            VSpace(16),
+            Text(
+              "Pick image to continue.",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            ListTile(
+              leading: Icon(Icons.camera),
+              title: Text("Capture using camera"),
+              onTap: () => onTap('camera'),
+            ),
+            ListTile(
+              leading: Icon(Icons.image),
+              title: Text("Pick from gallery"),
+              onTap: () => onTap('gallery'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -14,8 +14,12 @@ part 'packet_food_state.dart';
 class PacketFoodCubit extends Cubit<PacketFoodState> {
   PacketFoodCubit() : super(PacketFoodInitial());
 
-  Future pickImage(
-    ImageSource imageSource, {
+  File? ingredients;
+  File? nutrition;
+
+  Future pickImage({
+    required ImageSource imageSource,
+    required String type,
     required BuildContext context,
     Color? backgroundColor,
     Color? primaryColor,
@@ -41,6 +45,7 @@ class PacketFoodCubit extends Cubit<PacketFoodState> {
       if (permissionStatus == PermissionStatus.granted) {
         actionAfterPermission(
           imageSource,
+          type,
           backgroundColor: backgroundColor,
           primaryColor: primaryColor,
           toolbarWidgetColor: toolbarWidgetColor,
@@ -54,7 +59,8 @@ class PacketFoodCubit extends Cubit<PacketFoodState> {
   }
 
   void actionAfterPermission(
-    ImageSource imageSource, {
+    ImageSource imageSource,
+    String type, {
     Color? backgroundColor,
     Color? primaryColor,
     Color? toolbarWidgetColor,
@@ -69,7 +75,20 @@ class PacketFoodCubit extends Cubit<PacketFoodState> {
       toolbarWidgetColor: toolbarWidgetColor,
     );
     if (file != null) {
-      emit(PacketFoodFileSelected(file.path));
+      if (type == "ingredients") {
+        ingredients = file;
+      } else {
+        nutrition = file;
+      }
+      emit(PacketFoodUpdate(DateTime.now()));
     }
+  }
+
+  void continueToFoodAI() {
+    List<String> filePaths = [];
+    if (ingredients != null) filePaths.add(ingredients!.path);
+    if (nutrition != null) filePaths.add(nutrition!.path);
+
+    emit(PacketFoodFileSelected(filePaths));
   }
 }
