@@ -214,6 +214,20 @@ class HomeView extends StatelessWidget {
                       ),
                     const Divider(),
                     const VSpace(8),
+
+                    FilledButton(
+                      onPressed: () {
+                        context.pushNamed(RouteName.foodDetailV2);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Food Detail V2"),
+                          Icon(Icons.keyboard_arrow_right),
+                        ],
+                      ),
+                    ),
+
                     Text(
                       "Discover a healthier you with FoodAi! Your pocket nutritionist awaits!",
                       style: Theme.of(context).textTheme.titleLarge,
