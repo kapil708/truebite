@@ -77,6 +77,9 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       );
 
       String output = cleanJsonOutput(candidates?.output);
+
+      log("output => $output");
+
       return Map<String, dynamic>.from(jsonDecode(output));
     } catch (e) {
       return Future.error(

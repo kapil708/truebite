@@ -37,8 +37,6 @@ class FoodDetailJsonCubit extends Cubit<FoodDetailJsonState> {
           images.add(localFile.readAsBytesSync());
         }
 
-        // final Uint8List image = localFile!.readAsBytesSync();
-
         final response = await aiUseCase.getPacketFoodJsonByImage(images);
 
         response.fold(

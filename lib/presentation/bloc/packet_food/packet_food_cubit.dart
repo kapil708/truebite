@@ -91,4 +91,12 @@ class PacketFoodCubit extends Cubit<PacketFoodState> {
 
     emit(PacketFoodFileSelected(filePaths));
   }
+
+  void continueToFoodAIV2() {
+    List<String> filePaths = [];
+    if (ingredients != null) filePaths.add(ingredients!.path);
+    if (nutrition != null) filePaths.add(nutrition!.path);
+
+    emit(PacketFoodFileSelectedV2(filePaths));
+  }
 }

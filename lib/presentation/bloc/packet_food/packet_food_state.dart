@@ -55,3 +55,12 @@ class PacketFoodFileSelected extends PacketFoodState {
   @override
   List<Object> get props => [filePaths];
 }
+
+class PacketFoodFileSelectedV2 extends PacketFoodState {
+  final List<String> filePaths;
+
+  const PacketFoodFileSelectedV2(this.filePaths);
+
+  @override
+  List<Object> get props => [filePaths];
+}

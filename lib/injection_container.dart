@@ -1,3 +1,4 @@
+import 'package:food_ai/presentation/bloc/food_detail_json/food_detail_json_cubit.dart';
 import 'package:food_ai/presentation/bloc/packet_food/packet_food_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,7 @@ Future<void> setUp() async {
   locator.registerFactory(() => LoginBloc(loginUseCase: locator(), localDataSource: locator()));
   locator.registerFactory(() => PacketFoodCubit());
   locator.registerFactory(() => FoodDetailCubit(aiUseCase: locator()));
+  locator.registerFactory(() => FoodDetailJsonCubit(aiUseCase: locator()));
 
   // Use case
   locator.registerLazySingleton(() => LoginUseCase(userRepository: locator()));

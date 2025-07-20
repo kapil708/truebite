@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+class CustomColors {
+  static const Color textPrimaryColor = Color(0xFF1A1A19);
+  static const Color textSecondaryColor = Color(0xFF79797D);
+  static const Color iconPrimaryColor = Color(0xFF464746);
+  static const Color textBgColor = Color(0xFFE0E0E0);
+  static Color dividerColor = Colors.grey.shade300;
+}
+
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: Color(0xFF6750A4),

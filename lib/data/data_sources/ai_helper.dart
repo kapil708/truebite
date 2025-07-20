@@ -293,9 +293,10 @@ String packetFoodScript5 = '''
        "serving_size": "e.g., 30 g",
        "nutrition": [
             {
-             "title": "<nutrient name>",
-             "value": "e.g., 30 g",
-             "label": "<low/moderate/high>"
+              "icon": "<nutrient icon>",     // e.g., "🔥", "💧", "🧂", etc.
+              "title": "<nutrient name>",
+              "value": "e.g., 30 g",
+              "label": "<low/moderate/high>"
             }
        ],
        "ingredients": [

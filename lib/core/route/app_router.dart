@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:food_ai/presentation/pages/food_details/food_detail_json_page.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/data_sources/local_data_source.dart';
@@ -46,20 +45,18 @@ class AppRouter {
 
               return FoodDetailPage(filePaths: filePaths);
             },
-            //builder: (context, state) => const FoodDetailPage(),
           ),
           GoRoute(
             path: 'foodDetailV2',
             name: RouteName.foodDetailV2,
             builder: (context, state) {
-              // List<dynamic> filePaths = [];
-              // if (state.uri.queryParameters['filePaths'] != null) {
-              //   filePaths = jsonDecode(state.uri.queryParameters['filePaths']!);
-              // }
+              List<dynamic> filePaths = [];
+              if (state.uri.queryParameters['filePaths'] != null) {
+                filePaths = jsonDecode(state.uri.queryParameters['filePaths']!);
+              }
 
-              return FoodDetailJsonPage();
+              return FoodDetailJsonPage(filePaths: filePaths);
             },
-            //builder: (context, state) => const FoodDetailPage(),
           ),
           GoRoute(
             path: 'settings',
