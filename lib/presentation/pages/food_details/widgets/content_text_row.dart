@@ -27,7 +27,7 @@ class ContentTextRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding ?? const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: padding ?? const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         color: color,
         border: showBorder == true ? Border(bottom: BorderSide(color: CustomColors.dividerColor)) : null,
@@ -54,7 +54,7 @@ class ContentTextRow extends StatelessWidget {
                   Text(
                     subTitle,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: CustomColors.textSecondaryColor,
+                          color: CustomColors.textPrimaryColor,
                         ),
                   ),
                 ],

@@ -196,7 +196,6 @@ class FoodDetailJsonView extends StatelessWidget {
                                         title: "Nutrition",
                                         description: "Serving Size: ${foodDetailCubit.aiResult!['serving_size']}",
                                         tooltip: 'The nutrition list helps you to see what nutrients are in the food you are considering. It will help you make healthier, more informed choices about what you eat.',
-                                        padding: const EdgeInsets.symmetric(horizontal: 16),
                                         trailing: Text(
                                           "(per 100 g)",
                                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -214,7 +213,7 @@ class FoodDetailJsonView extends StatelessWidget {
                                           title: nutrition['title'],
                                           subTitle: nutrition['label'],
                                           value: nutrition['value'],
-                                          showBorder: index == (nutritionList.length - 1) ? false : true,
+                                          showBorder: (index + 1) == nutritionList.length ? false : true,
                                         );
                                       }),
                                     ],
@@ -238,20 +237,15 @@ class FoodDetailJsonView extends StatelessWidget {
                                       HeaderTextRow(
                                         title: "Ingredients",
                                         tooltip: 'Ingredients are the substances that are used to make a particular food product. They can include a variety of different things, such as raw materials, additives, and other substances.',
-                                        padding: const EdgeInsets.symmetric(horizontal: 16),
                                       ),
                                       VSpace(4),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                                        width: double.infinity,
-                                        child: Wrap(
-                                          children: [
-                                            Text(
-                                              getIngredients(foodDetailCubit.aiResult!['ingredients']),
-                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5),
-                                            ),
-                                          ],
-                                        ),
+                                      Wrap(
+                                        children: [
+                                          Text(
+                                            getIngredients(foodDetailCubit.aiResult!['ingredients']),
+                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
