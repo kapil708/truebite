@@ -2,6 +2,9 @@ class ImageAssets {
   // flags
   static const String hindi = 'assets/images/india.png';
   static const String english = 'assets/images/us.png';
+  static const String trueBiteAi = 'assets/images/TrueBiteAI.png';
+  static const String trueBiteAi1 = 'assets/images/TrueBiteAI1.png';
+  static const String trueBiteAIShort = 'assets/images/TrueBiteAIShort.png';
   static const String foodAi = 'assets/images/FoodAi.png';
   static const String nutriScoreA = 'assets/images/NutriScoreA.png';
   static const String nutriScoreB = 'assets/images/NutriScoreB.png';

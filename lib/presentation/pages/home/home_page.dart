@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_ai/core/assets/image_assets.dart';
 import 'package:food_ai/core/extensions/spacing.dart';
 import 'package:food_ai/l10n/app_localizations.dart';
 import 'package:food_ai/presentation/widgets/shimmer/image_preview.dart';
@@ -99,13 +100,13 @@ class HomeView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Analyze Food",
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        VSpace(32),
+                        // Text(
+                        //   "Analyze Food",
+                        //   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        // ),
+                        // VSpace(32),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -231,10 +232,14 @@ class HomeView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.ac_unit),
+                      Image.asset(
+                        ImageAssets.trueBiteAIShort,
+                        height: 24,
+                      ),
                       HSpace(8),
                       Text(
-                        "AI INSIGHTS",
+                        "Truebite AI",
+                        // "AI INSIGHTS",
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_ai/core/assets/image_assets.dart';
-import 'package:food_ai/core/extensions/spacing.dart';
+import 'package:food_ai/core/route/route_names.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../core/route/route_names.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -24,7 +22,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Color(0XFFE3F2EB),
+      // backgroundColor: Theme.of(context).primaryColor,
       body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: Column(
@@ -32,16 +31,8 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              ImageAssets.foodAi,
-              width: MediaQuery.sizeOf(context).width * 0.4,
-            ),
-            const VSpace(16),
-            Text(
-              "Food Ai",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+              ImageAssets.trueBiteAi,
+              width: MediaQuery.sizeOf(context).width * 0.6,
             ),
           ],
         ),

@@ -1,4 +1,4 @@
-package com.adityatechnologies.food_ai
+package com.adityatechnologies.truebiteai
 
 import io.flutter.embedding.android.FlutterActivity
 
