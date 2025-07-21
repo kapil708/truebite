@@ -32,13 +32,17 @@ class PacketFoodCubit extends Cubit<PacketFoodState> {
       if (imageSource == ImageSource.camera) {
         permissionStatus = await Permission.camera.request();
       } else if (imageSource == ImageSource.gallery) {
-        // Only check for storage < Android 13
-        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        if (androidInfo.version.sdkInt >= 33) {
+        if (Platform.isIOS) {
           permissionStatus = await Permission.photos.request();
         } else {
-          permissionStatus = await Permission.storage.request();
+          // Only check for storage < Android 13
+          DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+          AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+          if (androidInfo.version.sdkInt >= 33) {
+            permissionStatus = await Permission.photos.request();
+          } else {
+            permissionStatus = await Permission.storage.request();
+          }
         }
       }
 

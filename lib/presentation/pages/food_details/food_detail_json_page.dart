@@ -6,6 +6,7 @@ import 'package:food_ai/core/theme/color_schemes.g.dart';
 import 'package:food_ai/injection_container.dart';
 import 'package:food_ai/presentation/bloc/food_detail_json/food_detail_json_cubit.dart';
 import 'package:food_ai/presentation/pages/food_details/widgets/disclaimer.dart';
+import 'package:food_ai/presentation/widgets/shimmer/image_preview.dart';
 
 import 'widgets/content_text_row.dart';
 import 'widgets/gemini_loading.dart';
@@ -100,9 +101,51 @@ class FoodDetailJsonView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.max,
                               children: [
+                                //Files
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "View input images 👉",
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context).textTheme.titleMedium,
+                                      ),
+                                    ),
+                                    ...foodDetailCubit.localFiles.map((file) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return ImagePreview(filePath: file.path);
+                                              },
+                                            );
+                                          },
+                                          child: Image.file(
+                                            file,
+                                            width: MediaQuery.sizeOf(context).width * 0.2,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                                VSpace(16),
+
                                 //Base info
                                 Container(
                                   padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: CustomColors.dividerColor),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(16),
+                                      topRight: Radius.circular(16),
+                                    ),
+                                  ),
                                   child: Column(
                                     children: [
                                       HeaderTextRow(
@@ -178,6 +221,7 @@ class FoodDetailJsonView extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                                VSpace(16),
 
                                 //Nutrition
                                 Container(

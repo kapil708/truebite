@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ai/core/extensions/spacing.dart';
 import 'package:food_ai/l10n/app_localizations.dart';
+import 'package:food_ai/presentation/widgets/shimmer/image_preview.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -54,7 +55,7 @@ class HomeView extends StatelessWidget {
       body: BlocConsumer<PacketFoodCubit, PacketFoodState>(
         listener: (context, state) {
           if (state is PacketFoodFailed) {
-            showSnackBar(context, SnackBarType.success, "Order created successfully");
+            showSnackBar(context, SnackBarType.error, state.message);
           } else if (state is PacketFoodFileSelected) {
             context.pushNamed(
               RouteName.foodDetail,
@@ -114,7 +115,17 @@ class HomeView extends StatelessWidget {
                               child: Column(
                                 children: [
                                   if (packetFoodCubit.ingredients != null) ...[
-                                    Image.file(packetFoodCubit.ingredients!),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return ImagePreview(filePath: packetFoodCubit.ingredients!.path);
+                                          },
+                                        );
+                                      },
+                                      child: Image.file(packetFoodCubit.ingredients!),
+                                    ),
                                     const VSpace(8),
                                   ],
                                   OutlinedButton(
@@ -153,7 +164,17 @@ class HomeView extends StatelessWidget {
                               child: Column(
                                 children: [
                                   if (packetFoodCubit.nutrition != null) ...[
-                                    Image.file(packetFoodCubit.nutrition!),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return ImagePreview(filePath: packetFoodCubit.nutrition!.path);
+                                          },
+                                        );
+                                      },
+                                      child: Image.file(packetFoodCubit.nutrition!),
+                                    ),
                                     const VSpace(8),
                                   ],
                                   OutlinedButton(
