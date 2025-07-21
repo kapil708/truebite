@@ -22,8 +22,8 @@ class ImagePreview extends StatelessWidget {
           maxScale: PhotoViewComputedScale.contained * 3,
         ),
         Positioned(
-          top: 48,
-          right: 48,
+          top: 20,
+          right: 10,
           child: IconButton.filled(
             onPressed: () => Navigator.pop(context),
             icon: Icon(Icons.close),

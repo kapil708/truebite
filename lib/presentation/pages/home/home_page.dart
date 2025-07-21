@@ -88,159 +88,161 @@ class HomeView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
+          return SafeArea(
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Analyze Food",
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        VSpace(32),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(color: Colors.white),
+                                child: Column(
+                                  children: [
+                                    if (packetFoodCubit.ingredients != null) ...[
+                                      GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return ImagePreview(filePath: packetFoodCubit.ingredients!.path);
+                                            },
+                                          );
+                                        },
+                                        child: Image.file(packetFoodCubit.ingredients!),
+                                      ),
+                                      const VSpace(8),
+                                    ],
+                                    OutlinedButton(
+                                      onPressed: () => imageSelection(
+                                        context: context,
+                                        type: 'ingredients',
+                                        onTap: (value) {
+                                          context.pop();
+                                          packetFoodCubit.pickImage(
+                                            imageSource: value == 'camera' ? ImageSource.camera : ImageSource.gallery,
+                                            type: 'ingredients',
+                                            context: context,
+                                            primaryColor: Theme.of(context).colorScheme.primary,
+                                            toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
+                                            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                          );
+                                        },
+                                      ),
+                                      style: buttonStyle,
+                                      child: Text(
+                                        "Upload \nIngredients Image",
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            HSpace(8),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(color: Colors.white),
+                                child: Column(
+                                  children: [
+                                    if (packetFoodCubit.nutrition != null) ...[
+                                      GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return ImagePreview(filePath: packetFoodCubit.nutrition!.path);
+                                            },
+                                          );
+                                        },
+                                        child: Image.file(packetFoodCubit.nutrition!),
+                                      ),
+                                      const VSpace(8),
+                                    ],
+                                    OutlinedButton(
+                                      onPressed: () => imageSelection(
+                                        context: context,
+                                        type: 'nutrition',
+                                        onTap: (value) {
+                                          context.pop();
+                                          packetFoodCubit.pickImage(
+                                            imageSource: value == 'camera' ? ImageSource.camera : ImageSource.gallery,
+                                            type: 'nutrition',
+                                            context: context,
+                                            primaryColor: Theme.of(context).colorScheme.primary,
+                                            toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
+                                            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                          );
+                                        },
+                                      ),
+                                      style: buttonStyle,
+                                      child: Text(
+                                        "Upload \nNutrition Image",
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        VSpace(16),
+                        FilledButton(
+                          onPressed: packetFoodCubit.continueToFoodAIV2,
+                          style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size.fromHeight(50),
+                            side: BorderSide(color: Colors.grey, width: 1),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                          child: Text(
+                            "Analyze Images",
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Icon(Icons.ac_unit),
+                      HSpace(8),
                       Text(
-                        "Analyze Food",
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        "AI INSIGHTS",
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      VSpace(32),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(color: Colors.white),
-                              child: Column(
-                                children: [
-                                  if (packetFoodCubit.ingredients != null) ...[
-                                    GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return ImagePreview(filePath: packetFoodCubit.ingredients!.path);
-                                          },
-                                        );
-                                      },
-                                      child: Image.file(packetFoodCubit.ingredients!),
-                                    ),
-                                    const VSpace(8),
-                                  ],
-                                  OutlinedButton(
-                                    onPressed: () => imageSelection(
-                                      context: context,
-                                      type: 'ingredients',
-                                      onTap: (value) {
-                                        context.pop();
-                                        packetFoodCubit.pickImage(
-                                          imageSource: value == 'camera' ? ImageSource.camera : ImageSource.gallery,
-                                          type: 'ingredients',
-                                          context: context,
-                                          primaryColor: Theme.of(context).colorScheme.primary,
-                                          toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
-                                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                                        );
-                                      },
-                                    ),
-                                    style: buttonStyle,
-                                    child: Text(
-                                      "Upload \nIngredients Image",
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          HSpace(8),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(color: Colors.white),
-                              child: Column(
-                                children: [
-                                  if (packetFoodCubit.nutrition != null) ...[
-                                    GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return ImagePreview(filePath: packetFoodCubit.nutrition!.path);
-                                          },
-                                        );
-                                      },
-                                      child: Image.file(packetFoodCubit.nutrition!),
-                                    ),
-                                    const VSpace(8),
-                                  ],
-                                  OutlinedButton(
-                                    onPressed: () => imageSelection(
-                                      context: context,
-                                      type: 'nutrition',
-                                      onTap: (value) {
-                                        context.pop();
-                                        packetFoodCubit.pickImage(
-                                          imageSource: value == 'camera' ? ImageSource.camera : ImageSource.gallery,
-                                          type: 'nutrition',
-                                          context: context,
-                                          primaryColor: Theme.of(context).colorScheme.primary,
-                                          toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
-                                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                                        );
-                                      },
-                                    ),
-                                    style: buttonStyle,
-                                    child: Text(
-                                      "Upload \nNutrition Image",
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      VSpace(16),
-                      FilledButton(
-                        onPressed: packetFoodCubit.continueToFoodAIV2,
-                        style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          minimumSize: Size.fromHeight(50),
-                          side: BorderSide(color: Colors.grey, width: 1),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                        child: Text(
-                          "Analyze Images",
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                      ),
                     ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.ac_unit),
-                    HSpace(8),
-                    Text(
-                      "AI INSIGHTS",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           );
 
@@ -435,26 +437,28 @@ class HomeView extends StatelessWidget {
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            VSpace(16),
-            Text(
-              "Pick image to continue.",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            ListTile(
-              leading: Icon(Icons.camera),
-              title: Text("Capture using camera"),
-              onTap: () => onTap('camera'),
-            ),
-            ListTile(
-              leading: Icon(Icons.image),
-              title: Text("Pick from gallery"),
-              onTap: () => onTap('gallery'),
-            ),
-          ],
+        return SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              VSpace(16),
+              Text(
+                "Pick image to continue.",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              ListTile(
+                leading: Icon(Icons.camera),
+                title: Text("Capture using camera"),
+                onTap: () => onTap('camera'),
+              ),
+              ListTile(
+                leading: Icon(Icons.image),
+                title: Text("Pick from gallery"),
+                onTap: () => onTap('gallery'),
+              ),
+            ],
+          ),
         );
       },
     );
