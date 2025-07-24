@@ -89,18 +89,24 @@ class PacketFoodCubit extends Cubit<PacketFoodState> {
   }
 
   void continueToFoodAI() {
-    List<String> filePaths = [];
-    if (ingredients != null) filePaths.add(ingredients!.path);
-    if (nutrition != null) filePaths.add(nutrition!.path);
+    if (ingredients != null && nutrition != null) {
+      List<String> filePaths = [ingredients!.path, nutrition!.path];
 
-    emit(PacketFoodFileSelected(filePaths));
+      ingredients = null;
+      nutrition = null;
+
+      emit(PacketFoodFileSelected(filePaths));
+    }
   }
 
   void continueToFoodAIV2() {
-    List<String> filePaths = [];
-    if (ingredients != null) filePaths.add(ingredients!.path);
-    if (nutrition != null) filePaths.add(nutrition!.path);
+    if (ingredients != null && nutrition != null) {
+      List<String> filePaths = [ingredients!.path, nutrition!.path];
 
-    emit(PacketFoodFileSelectedV2(filePaths));
+      ingredients = null;
+      nutrition = null;
+
+      emit(PacketFoodFileSelectedV2(filePaths));
+    }
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_ai/core/extensions/spacing.dart';
-import 'package:food_ai/core/theme/color_schemes.g.dart';
 
 class HeaderTextRow extends StatelessWidget {
   final String title;
@@ -37,7 +36,7 @@ class HeaderTextRow extends StatelessWidget {
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: CustomColors.textPrimaryColor,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
               ),
               HSpace(4),
@@ -45,7 +44,10 @@ class HeaderTextRow extends StatelessWidget {
                 triggerMode: TooltipTriggerMode.tap,
                 showDuration: Duration(seconds: 20),
                 message: tooltip,
-                child: Icon(Icons.info, color: CustomColors.iconPrimaryColor),
+                child: Icon(
+                  Icons.info,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
               ),
               Spacer(),
               if (trailing != null) trailing!,
@@ -55,7 +57,7 @@ class HeaderTextRow extends StatelessWidget {
             Text(
               description!,
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: CustomColors.textSecondaryColor,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
             ),
         ],

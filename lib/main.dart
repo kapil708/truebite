@@ -5,6 +5,8 @@ import 'package:food_ai/environment.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/route/app_router.dart';
+import 'core/theme/theme.dart';
+import 'core/theme/util.dart';
 import 'injection_container.dart' as di;
 import 'l10n/app_localizations.dart';
 import 'presentation/bloc/app/app_bloc.dart';
@@ -27,6 +29,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final brightness = View.of(context).platformDispatcher.platformBrightness;
+    // final brightness = Brightness.light;
+
+    // Use with Google Fonts package to use downloadable fonts
+    TextTheme textTheme = createTextTheme(context, "Roboto", "Poppins");
+    MaterialTheme theme = MaterialTheme(textTheme);
+
     return BlocProvider<AppBloc>(
       create: (context) => AppBloc()..add(OnAppInit()),
       child: BlocBuilder<AppBloc, AppState>(
@@ -37,7 +46,9 @@ class MyApp extends StatelessWidget {
             routerConfig: _router,
 
             /// Theming
-            themeMode: ThemeMode.light,
+            theme: theme.light(),
+            // theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+            // themeMode: ThemeMode.light,
             // themeMode: state.selectedThemeMode.value,
             // theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
             // darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),

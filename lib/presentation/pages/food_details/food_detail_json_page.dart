@@ -43,13 +43,11 @@ class FoodDetailJsonView extends StatelessWidget {
   }
 
   Color getFoodScoreColor(int foodScore) {
-    if (foodScore > 80) {
+    if (foodScore > 75) {
       return Color(0xFF3D894F);
-    } else if (foodScore > 60) {
-      return Color(0xFF88C748);
-    } else if (foodScore > 40) {
+    } else if (foodScore > 50) {
       return Color(0xFFF3CA45);
-    } else if (foodScore > 20) {
+    } else if (foodScore > 25) {
       return Color(0xFFE47A32);
     } else {
       return Color(0xFFDC422D);
@@ -140,8 +138,7 @@ class FoodDetailJsonView extends StatelessWidget {
                                   Container(
                                     padding: EdgeInsets.all(16),
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: CustomColors.dividerColor),
+                                      color: Theme.of(context).colorScheme.primaryContainer,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(16),
                                         topRight: Radius.circular(16),
@@ -205,13 +202,14 @@ class FoodDetailJsonView extends StatelessWidget {
                                                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                                   margin: EdgeInsets.all(4),
                                                   decoration: BoxDecoration(
-                                                    color: CustomColors.textBgColor,
+                                                    // color: CustomColors.textBgColor,
+                                                    color: Theme.of(context).colorScheme.primary,
                                                     borderRadius: BorderRadius.circular(4),
                                                   ),
                                                   child: Text(
                                                     tag,
                                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                          color: CustomColors.textPrimaryColor,
+                                                          color: Theme.of(context).colorScheme.onPrimary,
                                                         ),
                                                   ),
                                                 );
@@ -228,8 +226,7 @@ class FoodDetailJsonView extends StatelessWidget {
                                   Container(
                                     padding: EdgeInsets.all(16),
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: CustomColors.dividerColor),
+                                      color: Theme.of(context).colorScheme.primaryContainer,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(16),
                                         topRight: Radius.circular(16),
@@ -244,11 +241,11 @@ class FoodDetailJsonView extends StatelessWidget {
                                           trailing: Text(
                                             "(per 100 g)",
                                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                                  color: CustomColors.textSecondaryColor,
+                                                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                                                 ),
                                           ),
                                         ),
-                                        Divider(color: CustomColors.dividerColor),
+                                        Divider(color: Theme.of(context).colorScheme.outline),
                                         ...getNutrition(foodDetailCubit.aiResult!['nutrition']).map((nutrition) {
                                           List<Map<String, dynamic>> nutritionList = getNutrition(foodDetailCubit.aiResult!['nutrition']);
                                           int index = nutritionList.indexOf(nutrition);
@@ -270,8 +267,7 @@ class FoodDetailJsonView extends StatelessWidget {
                                   Container(
                                     padding: EdgeInsets.all(16),
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: CustomColors.dividerColor),
+                                      color: Theme.of(context).colorScheme.primaryContainer,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(16),
                                         topRight: Radius.circular(16),
@@ -288,7 +284,10 @@ class FoodDetailJsonView extends StatelessWidget {
                                           children: [
                                             Text(
                                               getIngredients(foodDetailCubit.aiResult!['ingredients']),
-                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5),
+                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                                    height: 1.5,
+                                                  ),
                                             ),
                                           ],
                                         ),

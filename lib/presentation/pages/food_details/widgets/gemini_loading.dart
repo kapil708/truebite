@@ -8,20 +8,16 @@ class GeminiLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(64),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Lottie.asset('assets/lottie/aiLoading.json'),
+            Lottie.asset('assets/lottie/aiAssistant.json'),
             Text(
-              "AI is in the process of fetching data."
-              "\nThis operation may take a moment."
-              "\nSo your patience is appreciated.",
+              "TrueBite AI is processing your data. \nHang tight, this won't take long. \n\n Your patience is appreciated 🙏",
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.outlineVariant,
-                  ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),

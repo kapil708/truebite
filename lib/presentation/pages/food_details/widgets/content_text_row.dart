@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_ai/core/extensions/spacing.dart';
-import 'package:food_ai/core/theme/color_schemes.g.dart';
 
 class ContentTextRow extends StatelessWidget {
   final String icon;
@@ -30,7 +29,7 @@ class ContentTextRow extends StatelessWidget {
       padding: padding ?? const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         color: color,
-        border: showBorder == true ? Border(bottom: BorderSide(color: CustomColors.dividerColor)) : null,
+        border: showBorder == true ? Border(bottom: BorderSide(color: Theme.of(context).colorScheme.outline)) : null,
       ),
       child: Row(
         children: [
@@ -48,13 +47,14 @@ class ContentTextRow extends StatelessWidget {
                   Text(
                     title,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: CustomColors.textPrimaryColor,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                   ),
                   Text(
                     subTitle,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: CustomColors.textPrimaryColor,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          // color: CustomColors.textPrimaryColor,
                         ),
                   ),
                 ],
@@ -65,7 +65,8 @@ class ContentTextRow extends StatelessWidget {
           Text(
             value,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: CustomColors.textPrimaryColor,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  // color: CustomColors.textPrimaryColor,
                 ),
           ),
         ],

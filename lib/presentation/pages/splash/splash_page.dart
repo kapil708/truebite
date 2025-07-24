@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_ai/core/assets/image_assets.dart';
+import 'package:food_ai/core/extensions/spacing.dart';
 import 'package:food_ai/core/route/route_names.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,6 +14,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
+    // return;
     Future.delayed(const Duration(seconds: 2)).then(
       (value) => context.goNamed(RouteName.home),
     );
@@ -22,8 +24,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFFE3F2EB),
-      // backgroundColor: Theme.of(context).primaryColor,
       body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: Column(
@@ -32,7 +32,20 @@ class _SplashPageState extends State<SplashPage> {
           children: [
             Image.asset(
               ImageAssets.trueBiteAi,
-              width: MediaQuery.sizeOf(context).width * 0.6,
+              width: MediaQuery.sizeOf(context).width * 0.4,
+            ),
+            VSpace(16),
+            RichText(
+              text: TextSpan(
+                text: "Truebite",
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w600),
+                children: [
+                  TextSpan(
+                    text: " AI",
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
