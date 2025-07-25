@@ -36,9 +36,12 @@ class ContentTextRow extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                icon,
-                style: Theme.of(context).textTheme.titleLarge,
+              SizedBox(
+                width: 32,
+                child: Text(
+                  icon,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
               HSpace(8),
               Column(

@@ -34,18 +34,18 @@ class _SplashPageState extends State<SplashPage> {
               ImageAssets.trueBiteAi,
               width: MediaQuery.sizeOf(context).width * 0.4,
             ),
-            VSpace(16),
-            RichText(
-              text: TextSpan(
-                text: "Truebite",
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w600),
-                children: [
-                  TextSpan(
-                    text: " AI",
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w400),
+            VSpace(32),
+            Text(
+              "TrueBite",
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 2,
+                    height: 1,
                   ),
-                ],
-              ),
+            ),
+            Text(
+              "AI Food Scan",
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ],
         ),

@@ -246,202 +246,24 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
                 SafeArea(
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Truebite",
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-                      children: [
-                        TextSpan(
-                          text: " AI",
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "TrueBite",
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2,
+                              height: 1,
+                            ),
+                      ),
+                      Text("AI Food Scan", style: Theme.of(context).textTheme.bodySmall),
+                    ],
                   ),
                 ),
-                // VSpace(16),
+                VSpace(16),
               ],
             ),
           );
-
-          // return SingleChildScrollView(
-          //   child: SizedBox(
-          //     width: MediaQuery.sizeOf(context).width,
-          //     child: Padding(
-          //       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          //       child: Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               Expanded(
-          //                 child: Column(
-          //                   children: [
-          //                     FilledButton(
-          //                       onPressed: () => imageSelection(
-          //                         context: context,
-          //                         type: 'ingredients',
-          //                         onTap: (value) {
-          //                           context.pop();
-          //                           packetFoodCubit.pickImage(
-          //                             imageSource: value == 'camera' ? ImageSource.camera : ImageSource.gallery,
-          //                             type: 'ingredients',
-          //                             context: context,
-          //                             primaryColor: Theme.of(context).colorScheme.primary,
-          //                             toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
-          //                             backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          //                           );
-          //                         },
-          //                       ),
-          //                       child: Row(
-          //                         mainAxisAlignment: MainAxisAlignment.center,
-          //                         children: [
-          //                           Icon(Icons.ac_unit),
-          //                           HSpace(4),
-          //                           Text("Pick Ingredients"),
-          //                         ],
-          //                       ),
-          //                     ),
-          //                     if (packetFoodCubit.ingredients != null) ...[
-          //                       Image.file(packetFoodCubit.ingredients!),
-          //                       const VSpace(8),
-          //                     ],
-          //                   ],
-          //                 ),
-          //               ),
-          //               HSpace(8),
-          //               Expanded(
-          //                 child: Column(
-          //                   children: [
-          //                     FilledButton(
-          //                       onPressed: () => imageSelection(
-          //                         context: context,
-          //                         type: 'nutrition',
-          //                         onTap: (value) {
-          //                           context.pop();
-          //                           packetFoodCubit.pickImage(
-          //                             imageSource: value == 'camera' ? ImageSource.camera : ImageSource.gallery,
-          //                             type: 'nutrition',
-          //                             context: context,
-          //                             primaryColor: Theme.of(context).colorScheme.primary,
-          //                             toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
-          //                             backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          //                           );
-          //                         },
-          //                       ),
-          //                       child: Row(
-          //                         mainAxisAlignment: MainAxisAlignment.center,
-          //                         children: [
-          //                           Icon(Icons.nature_outlined),
-          //                           HSpace(4),
-          //                           Text("Pick Nutrition"),
-          //                         ],
-          //                       ),
-          //                     ),
-          //                     if (packetFoodCubit.nutrition != null) ...[
-          //                       Image.file(packetFoodCubit.nutrition!),
-          //                       const VSpace(8),
-          //                     ],
-          //                   ],
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //           const VSpace(8),
-          //           // FilledButton(
-          //           //   onPressed: () => packetFoodCubit.pickImage(
-          //           //     ImageSource.camera,
-          //           //     'ingredients',
-          //           //     context: context,
-          //           //     primaryColor: Theme.of(context).colorScheme.primary,
-          //           //     toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
-          //           //     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          //           //   ),
-          //           //   style: FilledButton.styleFrom(backgroundColor: Colors.blue),
-          //           //   child: const Row(
-          //           //     mainAxisAlignment: MainAxisAlignment.center,
-          //           //     children: [
-          //           //       Icon(Icons.camera),
-          //           //       HSpace(8),
-          //           //       Text("Capture using camera"),
-          //           //     ],
-          //           //   ),
-          //           // ),
-          //           // const VSpace(8),
-          //           // FilledButton(
-          //           //   onPressed: () => packetFoodCubit.pickImage(
-          //           //     ImageSource.gallery,
-          //           //     '',
-          //           //     context: context,
-          //           //     primaryColor: Theme.of(context).colorScheme.primary,
-          //           //     toolbarWidgetColor: Theme.of(context).colorScheme.onPrimary,
-          //           //     backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          //           //   ),
-          //           //   child: const Row(
-          //           //     mainAxisAlignment: MainAxisAlignment.center,
-          //           //     children: [
-          //           //       Icon(Icons.image_outlined),
-          //           //       HSpace(8),
-          //           //       Text("Pick from gallery"),
-          //           //     ],
-          //           //   ),
-          //           // ),
-          //           // const VSpace(16),
-          //           if (packetFoodCubit.ingredients != null && packetFoodCubit.nutrition != null) ...[
-          //             FilledButton(
-          //               onPressed: packetFoodCubit.continueToFoodAI,
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   Text("Continue to FoodAi"),
-          //                   Icon(Icons.keyboard_arrow_right),
-          //                 ],
-          //               ),
-          //             ),
-          //             FilledButton(
-          //               onPressed: packetFoodCubit.continueToFoodAIV2,
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   Text("Continue to FoodAi V2"),
-          //                   Icon(Icons.keyboard_arrow_right),
-          //                 ],
-          //               ),
-          //             ),
-          //           ],
-          //           const Divider(),
-          //           const VSpace(8),
-          //           Text(
-          //             "Discover a healthier you with FoodAi! Your pocket nutritionist awaits!",
-          //             style: Theme.of(context).textTheme.titleLarge,
-          //           ),
-          //           const VSpace(32),
-          //           Text(
-          //             "How it works",
-          //             style: Theme.of(context).textTheme.titleLarge,
-          //           ),
-          //           const VSpace(8),
-          //           ...howItWorks.map((step) {
-          //             return RichText(
-          //               text: TextSpan(
-          //                 text: "${step['title']}",
-          //                 style: Theme.of(context).textTheme.titleMedium,
-          //                 children: [
-          //                   TextSpan(
-          //                     text: " ${step['description']}",
-          //                     style: Theme.of(context).textTheme.bodyLarge,
-          //                   )
-          //                 ],
-          //               ),
-          //             );
-          //           }),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // );
         },
       ),
     );

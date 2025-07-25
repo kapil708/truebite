@@ -1,4 +1,4 @@
-package com.adityatechnologies.truebiteai
+package com.adityatechnologies.truebite
 
 import io.flutter.embedding.android.FlutterActivity
 
