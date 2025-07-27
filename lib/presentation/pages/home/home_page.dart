@@ -50,6 +50,7 @@ class HomeView extends StatelessWidget {
     PacketFoodCubit packetFoodCubit = context.read<PacketFoodCubit>();
 
     return Scaffold(
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -98,6 +99,7 @@ class HomeView extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer,
+                    // color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(8),
                       bottomRight: Radius.circular(8),
@@ -110,14 +112,16 @@ class HomeView extends StatelessWidget {
                         'Start your scan!',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              // color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                       ),
                       VSpace(4),
                       Text(
                         'Upload or take photos of the ingredients and nutrition info. We’ll do the rest.',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              color: Theme.of(context).colorScheme.onSurface,
+                              // color: Theme.of(context).colorScheme.onPrimaryContainer,
                             ),
                       ),
                     ],

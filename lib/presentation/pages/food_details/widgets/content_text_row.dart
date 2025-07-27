@@ -4,7 +4,7 @@ import 'package:food_ai/core/extensions/spacing.dart';
 class ContentTextRow extends StatelessWidget {
   final String icon;
   final String title;
-  final String subTitle;
+  final String? subTitle;
   final String value;
   final double? height;
   final Color? color;
@@ -15,7 +15,7 @@ class ContentTextRow extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
-    required this.subTitle,
+    this.subTitle,
     required this.value,
     this.showBorder = true,
     this.height,
@@ -40,7 +40,7 @@ class ContentTextRow extends StatelessWidget {
                 width: 32,
                 child: Text(
                   icon,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
               HSpace(8),
@@ -51,15 +51,17 @@ class ContentTextRow extends StatelessWidget {
                     title,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          fontWeight: FontWeight.bold,
                         ),
                   ),
-                  Text(
-                    subTitle,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimaryContainer,
-                          // color: CustomColors.textPrimaryColor,
-                        ),
-                  ),
+                  if (subTitle != null)
+                    Text(
+                      subTitle!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryContainer,
+                            // color: CustomColors.textPrimaryColor,
+                          ),
+                    ),
                 ],
               ),
             ],
@@ -69,6 +71,7 @@ class ContentTextRow extends StatelessWidget {
             value,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  fontWeight: FontWeight.bold,
                   // color: CustomColors.textPrimaryColor,
                 ),
           ),

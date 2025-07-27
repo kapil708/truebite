@@ -71,7 +71,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     try {
       Candidates? candidates = await Gemini.instance.prompt(
         parts: [
-          Part.text(packetFoodScript5),
+          Part.text(packetFoodScript6),
           ...images.map((i) => Part.bytes(i)),
         ],
       );

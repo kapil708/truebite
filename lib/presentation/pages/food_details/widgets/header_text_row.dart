@@ -33,33 +33,43 @@ class HeaderTextRow extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      HSpace(4),
+                      Tooltip(
+                        triggerMode: TooltipTriggerMode.tap,
+                        showDuration: Duration(seconds: 20),
+                        message: tooltip,
+                        child: Icon(
+                          Icons.info,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (description != null)
+                    Text(
+                      description!,
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
                     ),
-              ),
-              HSpace(4),
-              Tooltip(
-                triggerMode: TooltipTriggerMode.tap,
-                showDuration: Duration(seconds: 20),
-                message: tooltip,
-                child: Icon(
-                  Icons.info,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                ),
+                ],
               ),
               Spacer(),
               if (trailing != null) trailing!,
             ],
           ),
-          if (description != null)
-            Text(
-              description!,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-            ),
         ],
       ),
     );

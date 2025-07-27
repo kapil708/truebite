@@ -82,6 +82,7 @@ class FoodDetailJsonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FoodDetailJsonCubit foodDetailCubit = context.read<FoodDetailJsonCubit>();
+    final brightness = View.of(context).platformDispatcher.platformBrightness;
 
     return BlocConsumer<FoodDetailJsonCubit, FoodDetailJsonState>(
       listener: (context, state) {},
@@ -138,11 +139,10 @@ class FoodDetailJsonView extends StatelessWidget {
                                   Container(
                                     padding: EdgeInsets.all(16),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.primaryContainer,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(16),
-                                        topRight: Radius.circular(16),
-                                      ),
+                                      color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                                      // border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+                                      // borderRadius: BorderRadius.circular(16),
+                                      // borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
                                     ),
                                     child: Column(
                                       children: [
@@ -152,7 +152,7 @@ class FoodDetailJsonView extends StatelessWidget {
                                           tooltip: 'Nutri-Score is a nutrition rating system that helps you make healthier food choices. It assigns a score to food products based on their nutritional value from A to E.',
                                           trailing: Image.asset(
                                             getNutriScoreImage(foodDetailCubit.aiResult!['nutri_score']['score']),
-                                            height: 32,
+                                            height: 42,
                                           ),
                                         ),
                                         HeaderTextRow(
@@ -167,7 +167,7 @@ class FoodDetailJsonView extends StatelessWidget {
                                             ),
                                             child: Text(
                                               "${foodDetailCubit.aiResult!['nova_score']['score']}",
-                                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                                     color: Colors.white,
                                                   ),
                                             ),
@@ -186,7 +186,7 @@ class FoodDetailJsonView extends StatelessWidget {
                                             ),
                                             child: Text(
                                               "${foodDetailCubit.aiResult!['food_score']['score']} / 100",
-                                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                                     color: Colors.white,
                                                   ),
                                             ),
@@ -202,13 +202,12 @@ class FoodDetailJsonView extends StatelessWidget {
                                                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                                   margin: EdgeInsets.all(4),
                                                   decoration: BoxDecoration(
-                                                    // color: CustomColors.textBgColor,
                                                     color: Theme.of(context).colorScheme.primary,
                                                     borderRadius: BorderRadius.circular(4),
                                                   ),
                                                   child: Text(
                                                     tag,
-                                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                                           color: Theme.of(context).colorScheme.onPrimary,
                                                         ),
                                                   ),
@@ -220,17 +219,15 @@ class FoodDetailJsonView extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  VSpace(16),
+                                  VSpace(8),
 
                                   //Nutrition
                                   Container(
                                     padding: EdgeInsets.all(16),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.primaryContainer,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(16),
-                                        topRight: Radius.circular(16),
-                                      ),
+                                      color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                                      // color: Theme.of(context).colorScheme.primaryContainer,
+                                      // borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
                                     ),
                                     child: Column(
                                       children: [
@@ -261,17 +258,15 @@ class FoodDetailJsonView extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  VSpace(16),
+                                  VSpace(8),
 
                                   //Ingredients
                                   Container(
                                     padding: EdgeInsets.all(16),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.primaryContainer,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(16),
-                                        topRight: Radius.circular(16),
-                                      ),
+                                      color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                                      // color: Theme.of(context).colorScheme.primaryContainer,
+                                      // borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
                                     ),
                                     child: Column(
                                       children: [
@@ -284,12 +279,75 @@ class FoodDetailJsonView extends StatelessWidget {
                                           children: [
                                             Text(
                                               getIngredients(foodDetailCubit.aiResult!['ingredients']),
-                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                                                     height: 1.5,
                                                   ),
                                             ),
                                           ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  VSpace(8),
+
+                                  //Summary
+                                  Container(
+                                    padding: EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                                      // color: Theme.of(context).colorScheme.primaryContainer,
+                                      // borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        HeaderTextRow(
+                                          title: "Summary",
+                                          tooltip: 'NA',
+                                        ),
+                                        VSpace(4),
+                                        Text(
+                                          foodDetailCubit.aiResult!['summary']['recommendation'],
+                                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                        Text(
+                                          foodDetailCubit.aiResult!['summary']['note'],
+                                          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                              ),
+                                        ),
+                                        VSpace(12),
+                                        Text(
+                                          "Daily Limits",
+                                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                        ContentTextRow(
+                                          icon: '👶',
+                                          title: "Child",
+                                          subTitle: foodDetailCubit.aiResult!['summary']['age_group']['child'],
+                                          value: foodDetailCubit.aiResult!['summary']['daily_limit']['child'],
+                                          showBorder: true,
+                                        ),
+                                        ContentTextRow(
+                                          icon: '👱',
+                                          title: "Adult",
+                                          subTitle: foodDetailCubit.aiResult!['summary']['age_group']['adult'],
+                                          value: foodDetailCubit.aiResult!['summary']['daily_limit']['adult'],
+                                          showBorder: true,
+                                        ),
+                                        ContentTextRow(
+                                          icon: '👴',
+                                          title: "Elderly",
+                                          subTitle: foodDetailCubit.aiResult!['summary']['age_group']['elderly'],
+                                          value: foodDetailCubit.aiResult!['summary']['daily_limit']['elderly'],
+                                          showBorder: false,
                                         ),
                                       ],
                                     ),
