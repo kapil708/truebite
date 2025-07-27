@@ -6,6 +6,15 @@ class CustomColors {
   static const Color iconPrimaryColor = Color(0xFF464746);
   static const Color textBgColor = Color(0xFFE0E0E0);
   static Color dividerColor = Colors.grey.shade300;
+
+  // expected colors
+  static const Color c1 = Color(0xFF046A29);
+  static const Color c2 = Color(0xFF00984A);
+  static const Color c3 = Color(0xFFCBE4C2);
+  static const Color c4 = Color(0xFFFDF6E3);
+  static const Color c5Text = Color(0xFF211e1e);
+  static const Color c6TextHover = Color(0xFF00984a);
+  static const Color c7 = Color(0xFF00984a);
 }
 
 const lightColorScheme = ColorScheme(

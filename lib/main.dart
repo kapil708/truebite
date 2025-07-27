@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:food_ai/environment.dart';
@@ -13,6 +14,9 @@ import 'presentation/bloc/app/app_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // For SDK version 35 and above
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
   Gemini.init(apiKey: Environment.apiKey);
 
   await di.setUp();
