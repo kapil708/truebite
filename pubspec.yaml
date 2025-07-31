@@ -1,4 +1,4 @@
-name: food_ai
+name: truebite
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -14,29 +14,45 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
-  #state management
+  # BLOC Pattern
+  bloc: ^9.0.0
   flutter_bloc: ^9.1.1
-  equatable: ^2.0.5
+  equatable: ^2.0.7
   dartz: ^0.10.1
+
+  # Local DB
+  sqflite: ^2.3.3
+  shared_preferences: ^2.5.3
+  flutter_dotenv: ^5.2.1
+
+  # Dependency Injection
   get_it: ^8.0.3
 
-  #navigation
+  # Network
+  retrofit: ^4.7.0
+  json_annotation: ^4.9.0
+  dio: ^5.8.0+1
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+  # Navigation
   go_router: ^16.0.0
 
-  #image
+  # Image
   image_picker: ^1.0.7
   image_cropper: ^9.1.0
   lottie: ^3.0.0
   photo_view: ^0.15.0
 
-  #message
+  # Toast
   top_snackbar_flutter: ^3.1.0
 
-  # permission
+  # Permission
   permission_handler: ^12.0.1
   device_info_plus: ^11.5.0
 
@@ -45,16 +61,19 @@ dependencies:
   internet_connection_checker_plus: ^2.0.0
 
   # Local storage
-  shared_preferences: ^2.1.2
+  # shared_preferences: ^2.1.2
 
   # class base calls
-  json_annotation: ^4.8.1
+  # json_annotation: ^4.8.1
 
-  # Ai
+  # AI
   flutter_gemini: ^3.0.0
   flutter_markdown: ^0.7.7+1
 
+  # Fonts
   google_fonts: ^6.2.1
+
+  # Native
   flutter_native_splash: ^2.4.6
 
 dev_dependencies:
@@ -68,14 +87,10 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
 
-  # class base calls
-  build_runner: ^2.4.6
-  json_serializable: ^6.7.1
-
-  # Localization
-  flutter_localizations:
-    sdk: flutter
-  intl: any
+  # Network
+  retrofit_generator: ^10.0.1
+  build_runner: ^2.6.0
+  json_serializable: ^6.10.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -96,6 +111,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/lottie/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
