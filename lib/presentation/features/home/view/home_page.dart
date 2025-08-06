@@ -229,6 +229,10 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
+                FilledButton(
+                  onPressed: homeCubit.getProductData,
+                  child: Text("Get Product Data"),
+                ),
                 SafeArea(
                   child: Column(
                     children: [

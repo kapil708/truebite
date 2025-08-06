@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -7,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../core/services/open_food_facts_service.dart';
 import '../../../../core/utils/helper.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial());
+  final OpenFoodFactsService openFoodFactsService;
+
+  HomeCubit({required this.openFoodFactsService}) : super(HomeInitial());
 
   File? ingredients;
   File? nutrition;
@@ -97,5 +102,10 @@ class HomeCubit extends Cubit<HomeState> {
 
       emit(HomeProcessImages(filePaths));
     }
+  }
+
+  void getProductData() async {
+    var d = await openFoodFactsService.getProduct();
+    log("data => ${jsonEncode(d)}");
   }
 }
