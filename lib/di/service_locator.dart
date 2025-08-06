@@ -14,6 +14,7 @@ import '../presentation/app/viewmodel/app_bloc.dart';
 import '../presentation/features/food_detail/viewmodel/food_detail_cubit.dart';
 import '../presentation/features/home/viewmodel/home_cubit.dart';
 import '../presentation/features/splash/viewmodel/splash_cubit.dart';
+import 'environment.dart';
 
 final GetIt locator = GetIt.instance;
 
@@ -29,7 +30,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => APIRepository(restClient: locator<RestClient>()));
 
   // Sources
-  final dio = buildDioClient('https://baseurl.com/api');
+  final dio = buildDioClient(Environment.apiUrl);
   locator.registerLazySingleton(() => RestClient(dio));
   locator.registerLazySingleton(() => PreferencesProvider(prefs: locator<SharedPreferences>()));
 
